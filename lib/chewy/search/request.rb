@@ -25,9 +25,10 @@ module Chewy
         search_type preference limit offset terminate_after
         timeout min_score source stored_fields search_after
         load script_fields suggest aggs aggregations none
-        indices_boost rescore function_score highlight total total_count
-        total_entries types delete_all count exists? exist? find pluck
-        scroll_batches scroll_hits scroll_results scroll_wrappers
+        indices_boost rescore function_score score_mode
+        highlight total total_count total_entries types
+        delete_all count exists? exist? find pluck scroll_batches
+        scroll_hits scroll_results scroll_wrappers
       ].to_set.freeze
       DEFAULT_BATCH_SIZE = 1000
       DEFAULT_PLUCK_BATCH_SIZE = 10_000
@@ -475,7 +476,7 @@ module Chewy
       #   @see https://www.elastic.co/guide/en/elasticsearch/reference/5.4/search-request-min-score.html
       #   @param value [String, Integer, Float]
       #   @return [Chewy::Search::Request]
-      %i[request_cache search_type preference timeout limit offset terminate_after min_score].each do |name|
+      %i[request_cache search_type preference timeout limit offset terminate_after min_score score_mode].each do |name|
         define_method name do |value|
           modify(name) { replace!(value) }
         end
