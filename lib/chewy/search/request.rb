@@ -25,7 +25,7 @@ module Chewy
         search_type preference limit offset terminate_after
         timeout min_score source stored_fields search_after
         load script_fields suggest aggs aggregations none
-        indices_boost rescore highlight total total_count
+        indices_boost rescore function_score highlight total total_count
         total_entries types delete_all count exists? exist? find pluck
         scroll_batches scroll_hits scroll_results scroll_wrappers
       ].to_set.freeze
@@ -38,9 +38,9 @@ module Chewy
       ].freeze
       # An array of storage names that are not related to hits at all.
       EXTRA_STORAGES = %i[aggs suggest].freeze
-      # An array of storage names that are changing the returned hist collection in any way.
+      # An array of storage names that are changing the returned hits collection in any way.
       WHERE_STORAGES = %i[
-        query filter post_filter none types min_score rescore indices_boost
+        query filter post_filter none types min_score rescore indices_boost function_score
       ].freeze
 
       delegate :hits, :wrappers, :objects, :records, :documents,
@@ -600,7 +600,7 @@ module Chewy
       #   @see https://www.elastic.co/guide/en/elasticsearch/reference/5.4/search-request-highlighting.html
       #   @param value [Hash]
       #   @return [Chewy::Search::Request]
-      %i[script_fields indices_boost rescore highlight].each do |name|
+      %i[script_fields indices_boost rescore highlight function_score].each do |name|
         define_method name do |value|
           modify(name) { update!(value) }
         end
