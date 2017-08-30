@@ -138,7 +138,7 @@ module Chewy
       end
 
       def render_body
-        exceptions = %i[filter query none] + QUERY_STRING_STORAGES
+        exceptions = %i[filter query none function_score] + QUERY_STRING_STORAGES
         body = @storages.except(*exceptions).values.inject({}) do |result, storage|
           result.merge!(storage.render || {})
         end
@@ -153,6 +153,13 @@ module Chewy
 
         filter = @storages[:filter].render
         query = @storages[:query].render
+        function_score = @storages[:function_score].render
+
+        if function_score
+          function_score[:query][:function_score].merge!(query) if query
+          function_score[:query][:function_score].merge!(filter) if filter
+          return function_score
+        end
 
         return query unless filter
 
