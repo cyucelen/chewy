@@ -135,12 +135,12 @@ describe Chewy::Search::Parameters do
 
     context do
       subject { described_class.new(request_cache: true) }
-      specify { expect(subject.render).to eq(request_cache: true) }
+      specify { expect(subject.render).to eq(body: {}, request_cache: true) }
     end
 
     context do
       subject { described_class.new(search_type: 'query_then_fetch') }
-      specify { expect(subject.render).to eq(search_type: 'query_then_fetch') }
+      specify { expect(subject.render).to eq(body: {}, search_type: 'query_then_fetch') }
     end
 
     context do
