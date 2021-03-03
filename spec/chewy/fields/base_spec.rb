@@ -145,6 +145,7 @@ describe Chewy::Fields::Base do
       end
 
       specify do
+<<<<<<< HEAD
         expect(EventsIndex.mappings_hash).to eq(
           mappings: {
             properties: {
@@ -159,6 +160,20 @@ describe Chewy::Fields::Base do
                       id: {type: 'integer'},
                       created_at: {type: 'time'}
                     }
+=======
+        expect(EventsIndex::Event.mappings_hash).to eq(
+          properties: {
+            id: {type: 'integer'},
+            category: {
+              type: 'object',
+              properties: {
+                id: {type: 'integer'},
+                licenses: {
+                  type: 'object',
+                  properties: {
+                    id: {type: 'integer'},
+                    created_at: {type: 'time'}
+>>>>>>> e3d155a (Drop support for Elasticsearch 6.x, prepare 7.1.0 release (#766))
                   }
                 }
               }
@@ -330,6 +345,7 @@ describe Chewy::Fields::Base do
       end
 
       specify do
+<<<<<<< HEAD
         expect(EventsIndex.mappings_hash).to eq(
           mappings: {
             properties: {
@@ -342,6 +358,18 @@ describe Chewy::Fields::Base do
               },
               category: {type: 'object'}
             }
+=======
+        expect(EventsIndex::Event.mappings_hash).to eq(
+          properties: {
+            id: {type: 'integer'},
+            name: {
+              type: 'integer',
+              fields: {
+                raw: {analyzer: 'my_own', type: Chewy.default_field_type}
+              }
+            },
+            category: {type: 'object'}
+>>>>>>> e3d155a (Drop support for Elasticsearch 6.x, prepare 7.1.0 release (#766))
           }
         )
       end
